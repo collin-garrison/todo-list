@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 export class TodoItem {
     constructor(title, description, dueDate, priority, completed) {
         this.title = title;
@@ -8,20 +10,20 @@ export class TodoItem {
     }
 
     get dueDate() {
-        return this._dueDate;
+        return format(this._dueDate, "MM/dd/yyyy");
     }
 
     set dueDate(value) {
-        this._dueDate = value;
+        this._dueDate = new Date(value + "T12:00:00");
     }
 
-    get priority() {
+    get priority() {    
         return this._priority;
     }
 
     set priority(value) {
         const levels = ["low", "medium", "high"];
-        if (!levels.includes(value)) throw new Error("Invalid priority level");
-        this._priority = value;
+        if (!levels.includes(value.toLowerCase())) throw new Error("Invalid priority level");
+        this._priority = value.toLowerCase();
     }
 }
