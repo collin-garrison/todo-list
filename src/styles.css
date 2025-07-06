@@ -32,7 +32,7 @@ header {
     background: var(--dark-grey);
 }
 
-.menu-button {
+#menu-button {
     position: absolute;
     width: 3rem;
     height: 3rem;
@@ -63,7 +63,7 @@ main {
     margin-top: 1.5rem;
 }
 
-.sidebar-item {
+.sidebar-button {
     display: flex;
     align-items: center;
     width: 17rem;
@@ -76,17 +76,21 @@ main {
     cursor: pointer;
 }
 
-.sidebar-item.selected {
+.sidebar-button.selected {
     background: var(--medium-grey);
     font-weight: bold;
 }
 
-.sidebar-item:hover {
+.sidebar-button:hover {
     background: var(--medium-grey);
 }
 
-.sidebar-item svg {
+.sidebar-button svg {
     height: 1.1rem;
     width: 1.1rem;
     margin-right: 0.5rem;
+}
+
+.hidden {
+    display: none;
 }
