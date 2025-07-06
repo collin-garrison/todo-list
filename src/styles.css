@@ -9,7 +9,6 @@
 :root {
     --light-grey: #ccc;
     --medium-grey: #aaa;
-    --med-dark-grey: #888;
     --dark-grey: #444;
 }
 
@@ -60,25 +59,34 @@ main {
     background: var(--light-grey);
 }
 
-#sidebar-item {
+#sidebar-top {
+    margin-top: 1.5rem;
+}
+
+.sidebar-item {
     display: flex;
     align-items: center;
-    width: 15rem;
-    margin: 2rem auto;
-    font-size: 1.75rem;
-    background: var(--medium-grey);
+    width: 17rem;
+    margin: 0.5rem auto;
+    font-size: 1rem;
+    background: transparent;
     border: none;
     border-radius: 0.5rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0.75rem;
     cursor: pointer;
 }
 
-#sidebar-item:hover {
-    background: var(--med-dark-grey);
+.sidebar-item.selected {
+    background: var(--medium-grey);
+    font-weight: bold;
 }
 
-#sidebar-item svg {
-    height: 1.5rem;
-    width: 1.5rem;
-    margin-right: 0.75rem;
+.sidebar-item:hover {
+    background: var(--medium-grey);
+}
+
+.sidebar-item svg {
+    height: 1.1rem;
+    width: 1.1rem;
+    margin-right: 0.5rem;
 }
