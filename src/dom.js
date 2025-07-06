@@ -13,6 +13,44 @@ export function addEventListeners() {
                 const selectedBtn = document.querySelector(".sidebar-button.selected");
                 selectedBtn.classList.remove("selected");
                 btn.classList.add("selected");
+
+                const currentPage = btn.id.split("-")[0];
+                renderPage(currentPage);
             }
     }));
+};
+
+export function renderPage(currentPage) {
+    if (currentPage === "inbox") renderInboxPage();
+    if (currentPage === "today") renderTodayPage();
+    if (currentPage === "week") renderWeekPage();
+};
+
+function renderInboxPage() {
+    const container = document.getElementById("todo-container");
+    container.innerText = "";
+
+    const title = document.createElement("h2");
+    title.textContent = "Inbox";
+    container.appendChild(title);
+
+    const addButton = document.createElement("button");
+    addButton.textContent = "Add Task";
+    container.appendChild(addButton);
+};
+
+function renderTodayPage() {
+    const container = document.getElementById("todo-container");
+    container.innerText = "";
+    const title = document.createElement("h2");
+    title.textContent = "Today";
+    container.appendChild(title);
+};
+
+function renderWeekPage() {
+    const container = document.getElementById("todo-container");
+    container.innerText = "";
+    const title = document.createElement("h2");
+    title.textContent = "This Week";
+    container.appendChild(title);
 };
