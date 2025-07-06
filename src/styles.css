@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --light-grey: #ccc;
+    --medium-grey: #aaa;
+    --med-dark-grey: #888;
+    --dark-grey: #444;
+}
+
+html {
+    font-size: 16px;
+    font-family: "Roboto", "serif";
+    color: white;
+}
+
+body {
+    display: grid;
+    grid-template-rows: 6rem 1fr;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: var(--dark-grey);
+}
+
+.menu-button {
+    position: absolute;
+    width: 3rem;
+    height: 3rem;
+    left: 1.25rem;
+    border: none;
+    outline: 3px solid white;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    background: transparent;
+    color: white;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 20rem 1fr;
+    background: white;
+}
+
+#sidebar {
+    background: var(--light-grey);
+}
+
+#sidebar-item {
+    display: flex;
+    align-items: center;
+    width: 15rem;
+    margin: 2rem auto;
+    font-size: 1.75rem;
+    background: var(--medium-grey);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+}
+
+#sidebar-item:hover {
+    background: var(--med-dark-grey);
+}
+
+#sidebar-item svg {
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-right: 0.75rem;
+}
