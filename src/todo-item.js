@@ -1,11 +1,11 @@
 import { format } from "date-fns";
 
 export class TodoItem {
-    constructor(title, description, dueDate, priority, completed) {
+    constructor(title, description, priority, dueDate, completed) {
         this.title = title;
         this.description = description;
-        this.dueDate = dueDate;
         this.priority = priority;
+        this.dueDate = dueDate;
         this.completed = completed;
     }
 
