@@ -39,6 +39,7 @@ function renderInboxPage() {
     const addButton = document.createElement("button");
     addButton.textContent = "Add Task";
     addButton.id = "add-task-button";
+    addButton.classList.add("simple-button");
     container.appendChild(addButton);
     addButton.addEventListener("click", () => {
         dialog.showModal();
