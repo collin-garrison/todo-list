@@ -126,11 +126,11 @@ dialog {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 2rem;
+    padding: 1.5rem 2rem 0 2rem;
     border-radius: 0.5rem;
     background: white;
     width: 50rem;
-    height: 25rem;
+    height: 23rem;
 }
 
 form {
@@ -150,15 +150,12 @@ form {
 #right-container {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
+    height: 100%;
 }
 
-#left-container > * {
-    width: 100%;
-    padding: 0 1rem;
-    margin: 0.5rem 0;
-}
-
+#left-container > *,
 #right-container > * {
     width: 100%;
 }
@@ -166,11 +163,15 @@ form {
 #name-input {
     font-size: 1.5rem;
     padding: 0.5rem;
+    margin-top: 0rem;
+    margin-bottom: 0.5rem;
 }
 
 #desc-input {
     font-size: 1.5rem;
     padding: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
     resize: none;
     height: 100%;
 }
@@ -180,8 +181,12 @@ form {
     margin-bottom: 1rem;
 }
 
+#priority-container input {
+    margin-left: 0.25rem;
+}
+
 #priority-container > div {
-    margin: 0.75rem 0.5rem;
+    margin: 1rem 0.5rem;
 }
 
 #priority-container > div:first-of-type {
@@ -198,14 +203,16 @@ form {
 
 #due-date {
     font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
     padding: 0.25rem;
+    width: 100%;
 }
 
 #buttons-container {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     gap: 1rem;
     width: 100%;
     height: 100%;
