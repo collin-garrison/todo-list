@@ -1,4 +1,11 @@
 import { TodoItem } from "./todo-item";
 
-const testItem = new TodoItem("Test", "This item is a test", "2025-07-10", "Medium", false);
-console.log(testItem);
+const todos = [];
+
+export function addTodo(name, description, priority, dueDate) {
+    description = description?.trim() || "";
+    const newTodo = new TodoItem(name, description, priority, dueDate, false);
+    todos.push(newTodo);
+};
+
+export const getTodos = () => todos;
