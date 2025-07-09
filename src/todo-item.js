@@ -14,7 +14,12 @@ export class TodoItem {
     }
 
     set dueDate(value) {
-        this._dueDate = new Date(value + "T12:00:00");
+        if (value instanceof Date) {
+            this._dueDate = value;
+        }
+        else {
+            this._dueDate = new Date(value + "T12:00:00");
+        }
     }
 
     get priority() {    
