@@ -95,14 +95,14 @@ main {
     display: none;
 }
 
-#todo-container {
+#content {
     width: 100%;
     color: var(--dark-grey);
     background: white;
     text-align: center;
 }
 
-#todo-container h2 {
+#content h2 {
     font-size: 2.5rem;
     margin: 2rem;
 }
