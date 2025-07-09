@@ -117,18 +117,35 @@ function renderInboxPage() {
     title.textContent = "Inbox";
     container.appendChild(title);
 
+    const todoTitlesContainer = document.createElement("div");
+    todoTitlesContainer.id = "todo-titles-container";
+    const completeTitle = document.createElement("h3");
+    completeTitle.textContent = "Complete?";
+    const nameTitle = document.createElement("h3");
+    nameTitle.textContent = "Name";
+    const descTitle = document.createElement("h3");
+    descTitle.textContent = "Description";
+    const priorityTitle = document.createElement("h3");
+    priorityTitle.textContent = "Priority";
+    const dueDateTitle = document.createElement("h3");
+    dueDateTitle.textContent = "Due Date";
+    todoTitlesContainer.appendChild(completeTitle);
+    todoTitlesContainer.appendChild(nameTitle);
+    todoTitlesContainer.appendChild(descTitle);
+    todoTitlesContainer.appendChild(priorityTitle);
+    todoTitlesContainer.appendChild(dueDateTitle);
+    container.appendChild(todoTitlesContainer);
+
     const todoContainer = document.createElement("div");
     todoContainer.id = "todo-container";
     container.appendChild(todoContainer);
 
     const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1)
-    addTodo("Add Task", "Use the button to make a new task", "high", tomorrow);
+    addTodo("Add a task", "Use the button below to add a new task", "medium", today);
     renderTodoList();
 
     const addButton = document.createElement("button");
-    addButton.textContent = "Add Task";
+    addButton.textContent = "Add task";
     addButton.id = "add-task-button";
     addButton.classList.add("simple-button");
     container.appendChild(addButton);
