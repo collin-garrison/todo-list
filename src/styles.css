@@ -142,7 +142,7 @@ form {
 #input-container {
     display: grid;
     gap: 2rem;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 5fr 3fr;
     font-size: 1.5rem;
 }
 
