@@ -2,6 +2,9 @@ export function addEventListeners() {
     const menuButton = document.getElementById("menu-button");
     const sidebar = document.getElementById("sidebar");
     const sidebarButtons = document.querySelectorAll(".sidebar-button");
+    const dialog = document.getElementById("new-task-dialog");
+    const form = document.getElementById("new-task-form");
+    const cancelButton = document.getElementById("cancel");
 
     menuButton.addEventListener("click", () => {
         sidebar.classList.toggle("hidden");
@@ -18,6 +21,42 @@ export function addEventListeners() {
                 renderPage(currentPage);
             }
     }));
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const name = formData.get("name");
+        const description = formData.get("description");
+        const priority = formData.get("priority");
+        const dueDateStr = formData.get("due-date");
+
+        if (!name.trim()) {
+            alert("Name cannot be empty");
+        } else if (!priority) {
+            alert("Must select priority level");
+        } else if (!dueDateStr) {
+            alert("Must select a due date");
+        } else {
+            const dueDate = new Date(dueDateStr);
+            const today = new Date();
+            dueDate.setHours(0, 0, 0, 0);
+            today.setHours(0, 0, 0, 0);
+
+            if (dueDate < today) {
+                alert("Due date must be in the future");
+            } else {
+                // do something with data
+                form.reset();
+                dialog.close();
+            };
+        };
+    });
+
+    cancelButton.addEventListener("click", () => {
+        dialog.close();
+        form.reset();
+    });
 };
 
 export function renderPage(currentPage) {
@@ -44,12 +83,6 @@ function renderInboxPage() {
     addButton.addEventListener("click", () => {
         dialog.showModal();
     });
-
-    const cancelButton = document.getElementById("cancel");
-    cancelButton.addEventListener("click", () => {
-        dialog.close();
-        form.reset();
-    })
 };
 
 function renderTodayPage() {
