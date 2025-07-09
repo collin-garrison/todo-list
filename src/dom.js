@@ -1,3 +1,5 @@
+import { addTodo, getTodos } from "./todo-list";
+
 export function addEventListeners() {
     const menuButton = document.getElementById("menu-button");
     const sidebar = document.getElementById("sidebar");
@@ -26,8 +28,8 @@ export function addEventListeners() {
         e.preventDefault();
 
         const formData = new FormData(form);
-        const name = formData.get("name");
-        const description = formData.get("description");
+        let name = formData.get("name");
+        let description = formData.get("description");
         const priority = formData.get("priority");
         const dueDateStr = formData.get("due-date");
 
@@ -46,9 +48,12 @@ export function addEventListeners() {
             if (dueDate < today) {
                 alert("Due date must be in the future");
             } else {
-                // do something with data
+                name = name.trim();
+                description = description?.trim() || "";
+                addTodo(name, description, priority, dueDateStr);
                 form.reset();
                 dialog.close();
+                renderTodoList();
             };
         };
     });
@@ -65,15 +70,62 @@ export function renderPage(currentPage) {
     if (currentPage === "week") renderWeekPage();
 };
 
-function renderInboxPage() {
+function renderTodoList() {
     const container = document.getElementById("todo-container");
+    container.textContent = "";
+
+    const todos = getTodos();
+    todos.forEach(todo => {
+        const div = document.createElement("div");
+        div.classList.add("todo-item");
+
+        const completeButton = document.createElement("button");
+        completeButton.type = "button";
+        completeButton.classList.add("todo-complete-button");
+        div.appendChild(completeButton);
+
+        const name = document.createElement("p");
+        name.textContent = todo.name;
+        name.classList.add("todo-name")
+        div.appendChild(name);
+
+        const description = document.createElement("p");
+        description.textContent = todo.description === "" ? "No description" : todo.description;
+        description.classList.add("todo-description");
+        div.appendChild(description);
+
+        const priority = document.createElement("p");
+        priority.textContent = todo.priority;
+        priority.classList.add(`todo-priority-${todo.priority}`);
+        div.appendChild(priority);
+
+        const dueDate = document.createElement("p");
+        dueDate.textContent = todo.dueDate;
+        dueDate.classList.add("todo-date");
+        div.appendChild(dueDate);
+
+        container.appendChild(div);
+    });
+}
+
+function renderInboxPage() {
+    const container = document.getElementById("content");
     const dialog = document.getElementById("new-task-dialog");
-    const form = document.getElementById("new-task-form");
     container.innerText = "";
 
     const title = document.createElement("h2");
     title.textContent = "Inbox";
     container.appendChild(title);
+
+    const todoContainer = document.createElement("div");
+    todoContainer.id = "todo-container";
+    container.appendChild(todoContainer);
+
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1)
+    addTodo("Add Task", "Use the button to make a new task", "high", tomorrow);
+    renderTodoList();
 
     const addButton = document.createElement("button");
     addButton.textContent = "Add Task";
@@ -86,7 +138,7 @@ function renderInboxPage() {
 };
 
 function renderTodayPage() {
-    const container = document.getElementById("todo-container");
+    const container = document.getElementById("content");
     container.innerText = "";
     const title = document.createElement("h2");
     title.textContent = "Today";
@@ -94,7 +146,7 @@ function renderTodayPage() {
 };
 
 function renderWeekPage() {
-    const container = document.getElementById("todo-container");
+    const container = document.getElementById("content");
     container.innerText = "";
     const title = document.createElement("h2");
     title.textContent = "This Week";
