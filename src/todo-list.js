@@ -10,3 +10,8 @@ export function addTodo(name, description, priority, dueDate) {
 };
 
 export const getTodos = () => todos;
+
+export function setTodos(newTodos) {
+    todos.length = 0;
+    todos.push(...newTodos);
+}
