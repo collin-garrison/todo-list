@@ -221,3 +221,55 @@ form {
     width: 100%;
     height: 100%;
 }
+
+#todo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.todo-item {
+    display: grid;
+    grid-template-columns: auto 2fr 3fr 7rem 8rem;
+    align-items: center;
+    height: 3rem;
+    width: 85rem;
+    gap: 1.5rem;
+    padding: 0 0.75rem;
+    font-size: 1.5rem;
+    outline: 2px solid var(--dark-grey);
+    margin-bottom: 2rem;
+    text-align: left;
+    cursor: default;
+}
+
+.todo-complete-button {
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+}
+
+.todo-name,
+.todo-description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#todo-titles-container {
+    display: grid;
+    grid-template-columns: 2rem 2fr 3fr 7rem 8rem;
+    gap: 1.5rem;
+    width: 85rem;
+    padding: 0 0.75rem;
+    margin: 0 auto 0.5rem auto;
+}
+
+#todo-titles-container h3 {
+    font-size: 1.25rem;
+    text-align: left;
+}
+
+#todo-titles-container h3:first-of-type {
+    text-align: center;
+}
