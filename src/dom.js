@@ -71,10 +71,16 @@ export function renderPage(currentPage) {
 };
 
 function renderTodoList() {
+    const todos = getTodos();
+    if (todos.length === 0) {
+        const today = new Date();
+        addTodo("Add a task", "Use the button below to add a new task", "medium", today);
+        renderTodoList();
+    };
+
     const container = document.getElementById("todo-container");
     container.textContent = "";
 
-    const todos = getTodos();
     todos.forEach(todo => {
         const div = document.createElement("div");
         div.classList.add("todo-item");
@@ -92,7 +98,7 @@ function renderTodoList() {
                 const today = new Date();
                 addTodo("Add a task", "Use the button below to add a new task", "medium", today);
                 renderTodoList();
-            }
+            };
         });
 
         const name = document.createElement("p");
@@ -152,9 +158,6 @@ function renderInboxPage() {
     const todoContainer = document.createElement("div");
     todoContainer.id = "todo-container";
     container.appendChild(todoContainer);
-
-    const today = new Date();
-    addTodo("Add a task", "Use the button below to add a new task", "medium", today);
     renderTodoList();
 
     const addButton = document.createElement("button");
