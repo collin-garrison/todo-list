@@ -42,18 +42,20 @@ export function addEventListeners() {
         } else {
             const dueDate = new Date(dueDateStr);
             const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(today.getDate() - 1);
             dueDate.setHours(0, 0, 0, 0);
-            today.setHours(0, 0, 0, 0);
+            yesterday.setHours(0, 0, 0, 0);
 
-            if (dueDate < today) {
-                alert("Due date must be in the future");
+            if (dueDate < yesterday) {
+                alert("Due date cannot be in the past");
             } else {
                 name = name.trim();
                 description = description?.trim() || "";
                 addTodo(name, description, priority, dueDateStr);
                 form.reset();
                 dialog.close();
-                renderTodoList();
+                renderTodoList("inbox");
             };
         };
     });
@@ -65,23 +67,48 @@ export function addEventListeners() {
 };
 
 export function renderPage(currentPage) {
-    if (currentPage === "inbox") renderInboxPage();
-    if (currentPage === "today") renderTodayPage();
-    if (currentPage === "week") renderWeekPage();
+    if (currentPage === "inbox") renderInboxPage()
+    else if (currentPage === "today") renderTodayPage()
+    else if (currentPage === "week") renderWeekPage();
 };
 
-function renderTodoList() {
+function renderTodoList(currentPage) {
     const todos = getTodos();
     if (todos.length === 0) {
         const today = new Date();
-        addTodo("Add a task", "Use the button below to add a new task", "medium", today);
-        renderTodoList();
+        addTodo("Add a task", "Use the button in your inbox to add a new task", "medium", today);
+        renderTodoList(currentPage);
     };
 
-    const container = document.getElementById("todo-container");
-    container.textContent = "";
+    const todoContainer = document.getElementById("todo-container");
+    todoContainer.textContent = "";
 
-    todos.forEach(todo => {
+    let sortedTodos;
+    const today = new Date();
+    const priorityOrder = {
+        "High": 0,
+        "Medium": 1,
+        "Low": 2
+    };
+    
+    if (currentPage === "inbox") {
+        sortedTodos = todos;
+    }
+    else if (currentPage === "today") {
+        sortedTodos = todos.filter(todo => todo.dueDate.getDate() === today.getDate());
+    } else if (currentPage === "week") {
+        const nextWeek = new Date(today);
+        nextWeek.setDate(today.getDate() + 7);
+        sortedTodos = todos.filter(todo => todo.dueDate < nextWeek);
+    }
+    sortedTodos = sortedTodos.sort((a, b) => {
+        const dateDiff = a.dueDate.setHours(0, 0, 0, 0) - b.dueDate.setHours(0, 0, 0, 0);
+        if (dateDiff !== 0) return dateDiff;
+
+        return priorityOrder[a.priority] - priorityOrder[b.priority];
+    });
+
+    sortedTodos.forEach(todo => {
         const div = document.createElement("div");
         div.classList.add("todo-item");
 
@@ -91,13 +118,13 @@ function renderTodoList() {
         div.appendChild(completeButton);
 
         completeButton.addEventListener("click", () => {
-            container.removeChild(div);
+            todoContainer.removeChild(div);
             const index = todos.indexOf(todo);
             todos.splice(index, 1);
             if (todos.length === 0) {
                 const today = new Date();
-                addTodo("Add a task", "Use the button below to add a new task", "medium", today);
-                renderTodoList();
+                addTodo("Add a task", "Use the button in your inbox to add a new task", "medium", today);
+                renderTodoList(currentPage);
             };
         });
 
@@ -119,23 +146,16 @@ function renderTodoList() {
         div.appendChild(priority);
 
         const dueDate = document.createElement("p");
-        dueDate.textContent = todo.dueDate;
+        dueDate.textContent = todo.formattedDueDate;
         dueDate.classList.add("todo-date");
         div.appendChild(dueDate);
 
-        container.appendChild(div);
+        todoContainer.appendChild(div);
     });
 }
 
-function renderInboxPage() {
+function renderTodoTitles() {
     const container = document.getElementById("content");
-    const dialog = document.getElementById("new-task-dialog");
-    container.innerText = "";
-
-    const title = document.createElement("h2");
-    title.textContent = "Inbox";
-    container.appendChild(title);
-
     const todoTitlesContainer = document.createElement("div");
     todoTitlesContainer.id = "todo-titles-container";
     const completeTitle = document.createElement("h3");
@@ -154,11 +174,24 @@ function renderInboxPage() {
     todoTitlesContainer.appendChild(priorityTitle);
     todoTitlesContainer.appendChild(dueDateTitle);
     container.appendChild(todoTitlesContainer);
+}
+
+function renderInboxPage() {
+    const container = document.getElementById("content");
+    const dialog = document.getElementById("new-task-dialog");
+    container.innerText = "";
+
+    const title = document.createElement("h2");
+    title.textContent = "Inbox";
+    container.appendChild(title);
+
+    renderTodoTitles();
 
     const todoContainer = document.createElement("div");
     todoContainer.id = "todo-container";
     container.appendChild(todoContainer);
-    renderTodoList();
+
+    renderTodoList("inbox");
 
     const addButton = document.createElement("button");
     addButton.textContent = "Add task";
@@ -176,6 +209,14 @@ function renderTodayPage() {
     const title = document.createElement("h2");
     title.textContent = "Today";
     container.appendChild(title);
+
+    renderTodoTitles();
+
+    const todoContainer = document.createElement("div");
+    todoContainer.id = "todo-container";
+    container.appendChild(todoContainer);
+
+    renderTodoList("today");
 };
 
 function renderWeekPage() {
@@ -184,4 +225,12 @@ function renderWeekPage() {
     const title = document.createElement("h2");
     title.textContent = "This Week";
     container.appendChild(title);
+
+    renderTodoTitles();
+
+    const todoContainer = document.createElement("div");
+    todoContainer.id = "todo-container";
+    container.appendChild(todoContainer);
+
+    renderTodoList("week");
 };
