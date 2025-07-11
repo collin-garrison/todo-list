@@ -86,9 +86,9 @@ function renderTodoList(currentPage) {
     let sortedTodos;
     const today = new Date();
     const priorityOrder = {
-        "High": 0,
-        "Medium": 1,
-        "Low": 2
+        "high": 0,
+        "medium": 1,
+        "low": 2
     };
     
     if (currentPage === "inbox") {
@@ -121,6 +121,7 @@ function renderTodoList(currentPage) {
             todoContainer.removeChild(div);
             const index = todos.indexOf(todo);
             todos.splice(index, 1);
+            localStorage.setItem("todos", JSON.stringify(todos));
             if (todos.length === 0) {
                 const today = new Date();
                 addTodo("Add a task", "Use the button in your inbox to add a new task", "medium", today);
@@ -141,8 +142,8 @@ function renderTodoList(currentPage) {
         div.appendChild(description);
 
         const priority = document.createElement("p");
-        priority.textContent = todo.priority;
-        priority.classList.add(`todo-priority-${todo.priority.toLowerCase()}`);
+        priority.textContent = todo.priority.charAt(0).toUpperCase() + todo.priority.slice(1);
+        priority.classList.add(`todo-priority-${todo.priority}`);
         div.appendChild(priority);
 
         const dueDate = document.createElement("p");
