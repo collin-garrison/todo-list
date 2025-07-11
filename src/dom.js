@@ -84,10 +84,21 @@ function renderTodoList() {
         completeButton.classList.add("todo-complete-button");
         div.appendChild(completeButton);
 
+        completeButton.addEventListener("click", () => {
+            container.removeChild(div);
+            const index = todos.indexOf(todo);
+            todos.splice(index, 1);
+            if (todos.length === 0) {
+                const today = new Date();
+                addTodo("Add a task", "Use the button below to add a new task", "medium", today);
+                renderTodoList();
+            }
+        });
+
         const name = document.createElement("p");
         name.textContent = todo.name;
         name.classList.add("todo-name")
-        name.title = name.textContent;z
+        name.title = name.textContent;
         div.appendChild(name);
 
         const description = document.createElement("p");
