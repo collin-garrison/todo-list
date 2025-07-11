@@ -10,7 +10,7 @@ export class TodoItem {
     }
 
     get dueDate() {
-        return format(this._dueDate, "MM/dd/yyyy");
+        return this._dueDate;
     }
 
     set dueDate(value) {
@@ -20,6 +20,10 @@ export class TodoItem {
         else {
             this._dueDate = new Date(value + "T12:00:00");
         }
+    }
+
+    get formattedDueDate() {
+        return format(this._dueDate, "MM/dd/yyyy"); 
     }
 
     get priority() {    
