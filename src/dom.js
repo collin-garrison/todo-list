@@ -87,16 +87,18 @@ function renderTodoList() {
         const name = document.createElement("p");
         name.textContent = todo.name;
         name.classList.add("todo-name")
+        name.title = name.textContent;z
         div.appendChild(name);
 
         const description = document.createElement("p");
         description.textContent = todo.description === "" ? "No description" : todo.description;
         description.classList.add("todo-description");
+        description.title = description.textContent;
         div.appendChild(description);
 
         const priority = document.createElement("p");
         priority.textContent = todo.priority;
-        priority.classList.add(`todo-priority-${todo.priority}`);
+        priority.classList.add(`todo-priority-${todo.priority.toLowerCase()}`);
         div.appendChild(priority);
 
         const dueDate = document.createElement("p");
@@ -120,7 +122,7 @@ function renderInboxPage() {
     const todoTitlesContainer = document.createElement("div");
     todoTitlesContainer.id = "todo-titles-container";
     const completeTitle = document.createElement("h3");
-    completeTitle.textContent = "Complete?";
+    completeTitle.textContent = "✓";
     const nameTitle = document.createElement("h3");
     nameTitle.textContent = "Name";
     const descTitle = document.createElement("h3");
